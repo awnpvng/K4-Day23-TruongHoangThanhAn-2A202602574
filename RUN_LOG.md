@@ -9,8 +9,8 @@ Cập nhật thủ công sau mỗi lần chạy xong (thành công hay thất b�
 |---|---|---|---|
 | 1 | survey about world model | ✅ Xong, đạt chuẩn | `OK: 12 sources, all citations resolve` |
 | 2 | survey about reinforcement learning for LLM reasoning | ✅ Xong, đạt chuẩn | `OK: 14 sources, all citations resolve` |
-| 3 | survey about LLM agents and tool use | ⏳ đang chạy | — |
-| 4 | survey about video and multimodal generation | ⬜ Chưa chạy | — |
+| 3 | survey about LLM agents and tool use | ⚠️ Xong nhưng chỉ 2/4 họ nguồn (người dùng chấp nhận, không chạy lại) | `OK: 13 sources, all citations resolve` |
+| 4 | survey about video and multimodal generation | ⏳ đang chạy (RPM nâng lên 15) | — |
 | 5 | survey about efficient inference and small language models | ⬜ Chưa chạy | — |
 
 ## Lịch sử các lần chạy
@@ -25,10 +25,11 @@ Cập nhật thủ công sau mỗi lần chạy xong (thành công hay thất b�
 | 6 | run 4 | RL cho LLM reasoning | google_genai:gemini-2.5-flash | ❌ bị treo ~26 phút, đã kill | Gemini free tier chỉ 15 RPM, nhiều subagent gọi song song liên tục 429 → agent kẹt trong retry nội bộ của SDK, không ra kết quả. Đã `kill` process + xoá container Docker. |
 | 7 | run 5 | RL cho LLM reasoning | google_genai:gemini-3.5-flash-lite (key mới, limit 10 RPM) | ⚠️ thành công nhưng lỗi chất lượng, 40.6 phút (2436s) | Thêm trần RPM phía client (`InMemoryRateLimiter`, mặc định 8 RPM, chỉnh qua `LAB_MAX_RPM`) dùng chung cho lead+mọi subagent. Validator `OK: 19 sources`, nhưng `source_families` chỉ còn `["arxiv", "hf-search"]` (2/4) — lead có giao thêm researcher bù nguồn (note `05-arxiv-web-supplement.md`) nhưng KHÔNG thực sự trích dẫn fact từ family đó vào thân báo cáo, nên `finalize_citations.py` âm thầm loại bỏ (chỉ giữ nguồn được cite). Chưa đạt RUBRIC 2.2 (cần >=3 họ nguồn ĐƯỢC CITE, không phải chỉ có mặt trong sources.json). |
 | 8 | run 6 | RL cho LLM reasoning | google_genai:gemini-3.5-flash-lite | ✅ sạch, 30.3 phút (1820s) | Sửa `agents.py` bước 5: bắt lead liệt kê sources.json theo family TRƯỚC khi viết thân báo cáo và chủ động lên kế hoạch cite >=3 family ngay từ đầu. Kết quả: `OK: 14 sources`, `subagent_calls=4`, 3 họ nguồn (`hf-daily`, `hf-search`, `web`) — đạt RUBRIC 2.1/2.2. |
-| 9 | run 1 | LLM agents and tool use | google_genai:gemini-3.5-flash-lite | ⏳ đang chạy | Chủ đề 3, dùng bản prompt đã sửa ổn định (bắt cite đa dạng nguồn từ đầu). |
+| 9 | run 1 | LLM agents and tool use | google_genai:gemini-3.5-flash-lite | ⚠️ sạch validator, 18.25 phút (1095s), nhưng chỉ 2/4 họ nguồn | `OK: 13 sources`, `subagent_calls=4`, nhưng `source_families: ["hf-search", "web"]` — thiếu arxiv/hf-daily dù prompt đã bắt lên kế hoạch đa dạng nguồn (hành vi nondeterministic của LLM, đúng như GUIDE cảnh báo). **Người dùng quyết định chấp nhận như hiện tại**, không chạy lại, để tiết kiệm thời gian. |
+| 10 | run 1 | video and multimodal generation | google_genai:gemini-3.5-flash-lite | ⏳ đang chạy | `LAB_MAX_RPM` nâng từ 8 lên **15** theo yêu cầu người dùng — CAO HƠN giới hạn thật của key (10 RPM) nên có rủi ro gặp lại 429. Theo dõi sát. |
 
 ## Bước tiếp theo
 
-- [ ] Theo dõi kết quả chủ đề 3 (`survey about LLM agents and tool use`).
-- [ ] Chạy chủ đề 4, 5 — luôn kiểm `meta.json["source_families"]` sau mỗi lần chạy (validator không tự kiểm RUBRIC 2.2).
-- [ ] Rà soát cả 5 báo cáo + `python self_check.py` cuối cùng.
+- [ ] Theo dõi kết quả chủ đề 4 (`survey about video and multimodal generation`), chú ý xem RPM=15 có gây lỗi 429 không.
+- [ ] Chạy chủ đề 5.
+- [ ] Rà soát cả 5 báo cáo + `python self_check.py` cuối cùng. Lưu ý: chủ đề 3 sẽ luôn hiện cảnh báo thiếu đa dạng nguồn trong tự đánh giá RUBRIC 2.2 — đã được người dùng chấp nhận có chủ đích.
