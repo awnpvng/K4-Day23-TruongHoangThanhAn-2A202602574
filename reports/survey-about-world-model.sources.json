@@ -1,0 +1,95 @@
+[
+  {
+    "n": 1,
+    "id": "2510.16732",
+    "url": "https://huggingface.co/papers/2510.16732",
+    "title": "What are world models and their significance in AI?",
+    "date": "2025-10-19",
+    "source": "hf-search"
+  },
+  {
+    "n": 2,
+    "url": "https://en.wikipedia.org/wiki/World_model_(artificial_intelligence)",
+    "title": "Wikipedia: World Model (Artificial Intelligence)",
+    "date": "N/A",
+    "source": "web"
+  },
+  {
+    "n": 3,
+    "url": "https://www.nvidia.com/en-us/glossary/world-models/",
+    "title": "What Is a World Model?",
+    "date": "N/A",
+    "source": "web"
+  },
+  {
+    "n": 4,
+    "id": "2606.12783",
+    "url": "https://arxiv.org/abs/2606.12783",
+    "title": "A Tutorial on World Models and Physical AI",
+    "date": "2026-06-11",
+    "source": "arxiv"
+  },
+  {
+    "n": 5,
+    "id": "2606.00133",
+    "url": "https://arxiv.science/abs/2606.00133",
+    "title": "World Models: A Comprehensive Survey of Architectures, Methodologies, Reasoning Paradigms, and Applications",
+    "date": "2026-05-28",
+    "source": "web"
+  },
+  {
+    "n": 6,
+    "id": "2507.05169",
+    "url": "https://arxiv.org/html/2507.05169v3",
+    "title": "Critiques of World Models",
+    "date": "N/A",
+    "source": "web"
+  },
+  {
+    "n": 7,
+    "id": "10.1145/3746449",
+    "url": "https://dl.acm.org/doi/10.1145/3746449",
+    "title": "Understanding World or Predicting Future? A Comprehensive Survey of World Models",
+    "date": "2025-09-09",
+    "source": "web"
+  },
+  {
+    "n": 8,
+    "id": "2607.06401",
+    "url": "https://arxiv.org/html/2607.06401",
+    "title": "A Definition and Roadmap for World Models",
+    "date": "N/A",
+    "source": "web"
+  },
+  {
+    "n": 9,
+    "id": "2206.14176",
+    "url": "https://huggingface.co/papers/2206.14176",
+    "title": "DayDreamer: World Models for Physical Robot Learning",
+    "date": "2022-06-28",
+    "source": "hf-search"
+  },
+  {
+    "n": 10,
+    "id": "2607.06216",
+    "url": "https://huggingface.co/papers/2607.06216",
+    "title": "MoWorld: A Flash World Model",
+    "date": "2026-08-03",
+    "source": "hf-search"
+  },
+  {
+    "n": 11,
+    "id": "2411.14499",
+    "url": "https://huggingface.co/papers/2411.14499",
+    "title": "Understanding World or Predicting Future? A Comprehensive Survey of World Models",
+    "date": "2024-11-21",
+    "source": "hf-search"
+  },
+  {
+    "n": 12,
+    "url": "https://aimultiple.com/world-foundation-model",
+    "title": "World Foundation Models: 10 Use Cases",
+    "date": "2026-08-10",
+    "source": "web"
+  }
+]
