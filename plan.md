@@ -6,8 +6,8 @@
 - [x] [run] Kiểm tra LLM calling (mock tool-call đơn giản) — đã test cả OpenRouter và Gemini (`google_genai:gemini-2.5-flash`), cả hai trả `tool_calls` đúng.
 - [x] [code] Hoàn thiện các TODO dành cho sinh viên (`check_citations.py`, `tools.py`, `agents.py`, `research.py`), giữ nguyên các tệp được cung cấp.
 - [x] [run] Kiểm thử công cụ (`python tools.py`) và validator — đều pass.
-- [~] [report] Sinh và rà soát đủ năm báo cáo. *(2/5 đạt chuẩn; chủ đề 3 đang chạy trên Gemini — xem `RUN_LOG.md` để biết chi tiết từng lần; chủ đề 4-5 chưa chạy)*
-- [ ] [submit] Tự kiểm tra, rà soát bí mật, rồi chuẩn bị repo công khai để nộp.
+- [x] [report] Sinh và rà soát đủ năm báo cáo. **Cả 5/5 chủ đề đạt chuẩn** — `python self_check.py` → **READY to submit**. Chi tiết từng lần chạy (kể cả các lỗi đã gặp và cách sửa) xem [RUN_LOG.md](RUN_LOG.md).
+- [~] [submit] Tự kiểm tra, rà soát bí mật, rồi chuẩn bị repo công khai để nộp. *(git/secrets đã sạch, rà soát nội dung đã xong và sửa 2 lỗi TL;DR thiếu citation; còn thiếu bước commit/push)*
 
 Checkbox `[ ]` là chưa hoàn tất; đổi thành `[x]` khi công việc tương ứng đã xong.
 
@@ -73,36 +73,37 @@ Luồng chính:
 - [x] [safety] Không sửa `model.py`/`sandbox.py`; không upload `.env`/khóa vào sandbox (khóa Exa chỉ ở host, được che khi lộ trong lỗi); mọi lời gọi mạng giữ ở host; sandbox luôn được dọn dẹp qua `with open_sandbox()`.
 - [x] [run] Đã chạy `survey about world model` end-to-end trong Docker sandbox 2 lần: lần 1 lộ 2 lỗi thật (lead tự viết `# References` giả trong thân báo cáo; 1 URL arxiv sai domain) → đã sửa prompt (`agents.py`) + siết `check_citations.py` (chặn heading References giả, chặn `source` không hợp lệ) → chạy lại lần 2 **sạch**: `OK: 12 sources, all citations resolve`, `subagent_calls=5`, 3 họ nguồn (arxiv/hf-search/web).
 
-### 5. Sinh và rà soát năm báo cáo
+### 5. Sinh và rà soát năm báo cáo — ✅ Hoàn thành cả 5/5
 
-- [x] [report] Sinh báo cáo cho `survey about world model` — **đạt chuẩn** (validator OK, 12 nguồn, 3 họ nguồn, không còn References giả).
-- [~] [report] Sinh báo cáo cho `survey about reinforcement learning for LLM reasoning` — **3 lần lỗi liên tiếp, đang chạy lần 4**. Chi tiết đầy đủ xem [RUN_LOG.md](RUN_LOG.md):
-  - Lần 1 (OpenRouter): nguồn `[8]` gắn `"source": "alphaXiv"` (không hợp lệ) + trùng bài với `[7]` → đã siết prompt + thêm kiểm tra `source` hợp lệ vào `check_citations.py`.
-  - Lần 2-3 (OpenRouter): thất bại vì tài khoản **hết credit** (`402`) → đổi sang Gemini (`gemini-3.5-flash-lite`, key mới), thêm **trần RPM phía client** (`InMemoryRateLimiter` 8 RPM trong `research.py`, dùng chung cho lead + mọi subagent) để không vượt 10 RPM của key.
-  - Lần 1 trên Gemini bị treo ~26 phút do thiếu rate limiter (key cũ 15 RPM) → đã kill, thêm rate limiter.
-  - Lần với rate limiter: chạy xong (40.6 phút) nhưng chỉ đạt **2/4 họ nguồn được trích dẫn thật** (arxiv, hf-search) — lead có giao thêm việc bù nguồn nhưng không thực sự cite vào thân báo cáo nên `finalize_citations.py` âm thầm loại bỏ → đã sửa `agents.py` bắt lead lên kế hoạch cite đa dạng nguồn *trước khi* viết thân báo cáo.
-  - **Lần chạy cuối (sau khi sửa):** đạt chuẩn — `OK: 14 sources, all citations resolve`, `subagent_calls=4`, 3 họ nguồn (`hf-daily`, `hf-search`, `web`), 30.3 phút.
-- [~] [report] Sinh báo cáo cho `survey about LLM agents and tool use` — đang chạy (lần 1, dùng bản prompt đã ổn định).
-- [ ] [report] Sinh báo cáo cho `survey about video and multimodal generation`.
-- [ ] [report] Sinh báo cáo cho `survey about efficient inference and small language models`.
-- [ ] [report] Với mỗi báo cáo, kiểm tra cấu trúc TL;DR, Background, 3–6 chủ đề, Trends and open problems; có tổng hợp so sánh, nguồn nền tảng và nguồn gần đây.
-- [ ] [report] Chạy citation checker trên cả năm bộ `.md`/`.sources.json`; mở tối thiểu ba citation mỗi báo cáo để đối chiếu nội dung nguồn.
-- [ ] [report] Xác nhận từng `.meta.json` có ít nhất 3 lần gọi subagent và ít nhất 3 họ nguồn trong `arxiv`, `hf-daily`, `hf-search`, `web`.
+| Chủ đề | Validator | Nguồn | Họ nguồn | subagent_calls |
+|---|---|---|---|---|
+| world model | `OK: 8 sources` | 8 | arxiv, hf-search, web | 5 |
+| RL for LLM reasoning | `OK: 14 sources` | 14 | hf-daily, hf-search, web | 4 |
+| LLM agents and tool use | `OK: 12 sources` | 12 | arxiv, hf-search, web | 4 |
+| video and multimodal generation | `OK: 15 sources` | 15 | arxiv, hf-search, web | 5 |
+| efficient inference and small LM | `OK: 12 sources` | 12 | arxiv, hf-search, web | 4 |
+
+Toàn bộ quá trình debug (nhiều lần chạy lại vì lỗi thật: References giả trong thân báo cáo, `source` không hợp lệ, hết credit OpenRouter, Gemini rate-limit, 2 file `report.md`/`sources.json` lệch pha, TL;DR thiếu citation...) được ghi đầy đủ trong [RUN_LOG.md](RUN_LOG.md). Mỗi lỗi phát hiện được đều dẫn tới một thay đổi code/prompt cụ thể (không sửa tay báo cáo).
+
+- [x] [report] Rà soát thủ công: đọc đủ 5 báo cáo, phát hiện lỗi thật — **2 báo cáo (world model, video/multimodal) có TOÀN BỘ bullet TL;DR không citation**, vi phạm `REPORT_TEMPLATE.md`. Đã sửa `agents.py` (bắt buộc mọi bullet TL;DR có `[n]`, yêu cầu nội dung cụ thể) + thêm chốt chặn TL;DR-citation trong `research.py` `save_outputs()`, chạy lại 2 chủ đề đó — giờ cả 5 báo cáo có TL;DR đầy đủ citation và nội dung cụ thể (tên method, số liệu thật).
+- [ ] [report] Mở thủ công vài URL trong References để đối chiếu nguồn thật trước khi nộp (RUBRIC 4.2 do giảng viên tự kiểm mẫu).
 
 ### 6. Kiểm tra cuối và nộp
 
-- [ ] [run] Chạy `python self_check.py`; xử lý hết lỗi về báo cáo, metadata, citation và git.
-- [ ] [safety] Kiểm tra `.env` không được track, không có khóa trong tệp đang track/lịch sử git; thu hồi khóa nếu từng bị lộ.
-- [ ] [run] Kiểm tra `requirements.txt` cài được môi trường và README có cách cài/chạy/đọc báo cáo đầy đủ.
-- [ ] [submit] Commit mã nguồn cùng toàn bộ báo cáo; đẩy lên GitHub public và nộp URL repo.
+- [x] [run] Chạy `python self_check.py` → **READY to submit** (không còn lỗi báo cáo/metadata/citation/git).
+- [x] [safety] `.env` không track, không khóa nào trong tệp/lịch sử git (xác nhận bằng `self_check.py`).
+- [x] [run] `requirements.txt` đủ và đúng (đã thêm `langchain-google-genai`); README có sẵn hướng dẫn cài/chạy/đọc `reports/`.
+- [ ] [submit] Commit mã nguồn cùng toàn bộ `reports/`; đẩy lên GitHub public và nộp URL repo.
 
 ## Cổng nghiệm thu
 
-- Validator trả `OK: N sources, all citations resolve` với từng báo cáo.
-- Có đủ 15 tệp đầu ra cho năm chủ đề: mỗi chủ đề một `.md`, `.sources.json`, `.meta.json`.
-- Mỗi metadata đạt `subagent_calls >= 3` và tối thiểu 3 họ nguồn; nguồn khớp URL theo quy ước arXiv/Hugging Face.
-- Báo cáo theo mẫu, citations đối chiếu được; References do `finalize_citations.py` sinh bên trong sandbox.
-- `python self_check.py` hoàn tất không lỗi; không có `.env`/khóa được commit.
+- [x] Validator trả `OK: N sources, all citations resolve` với từng báo cáo — đạt cả 5/5.
+- [x] Có đủ 15 tệp đầu ra cho năm chủ đề: mỗi chủ đề một `.md`, `.sources.json`, `.meta.json`.
+- [x] Mỗi metadata đạt `subagent_calls >= 3` và tối thiểu 3 họ nguồn; nguồn khớp URL theo quy ước arXiv/Hugging Face.
+- [x] Báo cáo theo mẫu (gồm TL;DR có citation đầy đủ), citations đối chiếu được; References do `finalize_citations.py` sinh bên trong sandbox.
+- [x] `python self_check.py` hoàn tất không lỗi; không có `.env`/khóa được commit.
+
+**→ Chỉ còn bước cuối: commit + push lên GitHub public rồi nộp link.**
 
 ## Lưu ý vận hành
 

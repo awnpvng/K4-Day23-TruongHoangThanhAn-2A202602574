@@ -1,0 +1,98 @@
+[
+  {
+    "n": 1,
+    "id": "2608.29966",
+    "url": "https://arxiv.org/abs/2608.29966",
+    "title": "DataFoundry: Evolving Data Preparators via Recursive Self-Improvement",
+    "date": "2026-08-30",
+    "source": "arxiv"
+  },
+  {
+    "n": 2,
+    "id": "2606.24998",
+    "url": "https://arxiv.org/abs/2606.24998",
+    "title": "Internal Data Repetition Destroys Language Models",
+    "date": "2026-06-23",
+    "source": "arxiv"
+  },
+  {
+    "n": 3,
+    "id": "2404.02258",
+    "url": "https://arxiv.org/abs/2404.02258",
+    "title": "Mixture-of-Depths: Dynamically allocating compute in transformer-based language models",
+    "date": "2024-04-02",
+    "source": "web"
+  },
+  {
+    "n": 4,
+    "id": "bc427eb348789b190e3ea050cceff8a3",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2024/file/bc427eb348789b190e3ea050cceff8a3-Paper-Conference.pdf",
+    "title": "Mixture of Tokens: Continuous MoE through Cross-Example Aggregation",
+    "date": "",
+    "source": "web"
+  },
+  {
+    "n": 5,
+    "id": "2210.17323",
+    "url": "https://arxiv.org/abs/2210.17323",
+    "title": "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers",
+    "date": "2022-10-31",
+    "source": "arxiv"
+  },
+  {
+    "n": 6,
+    "id": "2306.00978",
+    "url": "https://arxiv.org/abs/2306.00978",
+    "title": "AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration",
+    "date": "2023-06-01",
+    "source": "web"
+  },
+  {
+    "n": 7,
+    "id": "exl2-quantization",
+    "url": "https://oobabooga.github.io/blog/posts/gptq-awq-exl2-llamacpp/",
+    "title": "ExLlamaV2 (EXL2) Quantization and Inference",
+    "date": "2023-09-01",
+    "source": "web"
+  },
+  {
+    "n": 8,
+    "id": "2504.12285",
+    "url": "https://arxiv.org/abs/2504.12285",
+    "title": "BitNet b1.58 1-Bit Models and bitnet.cpp Inference",
+    "date": "2025-04-12",
+    "source": "web"
+  },
+  {
+    "n": 9,
+    "id": "2309.06180",
+    "url": "https://arxiv.org/abs/2309.06180",
+    "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+    "date": "2023-09-12",
+    "source": "arxiv"
+  },
+  {
+    "n": 10,
+    "id": "aclanthology-speculative",
+    "url": "https://aclanthology.org/2024.findings-acl.456.pdf",
+    "title": "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding",
+    "date": "",
+    "source": "web"
+  },
+  {
+    "n": 11,
+    "id": "2601.11580",
+    "url": "https://arxiv.org/abs/2601.11580",
+    "title": "Production-Grade Evaluation of Speculative Decoding in vLLM",
+    "date": "",
+    "source": "web"
+  },
+  {
+    "n": 12,
+    "id": "2606.01806",
+    "url": "https://huggingface.co/papers/2606.01806",
+    "title": "ProbeScale: Probing Analysis to Optimize Neural Scaling Laws for Efficient Small Language Model Inference",
+    "date": "2026-06-01",
+    "source": "hf-search"
+  }
+]

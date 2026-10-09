@@ -62,8 +62,14 @@ Follow these steps in order:
    theme section each "rare" family's citation will go into now, not as an afterthought. Then write the BODY of
    {REPORT_PATH} following REPORT_TEMPLATE.md: title, `## TL;DR` (3-5 bullets), `## Background`, 3 to 6 theme sections
    that synthesize across papers (compare approaches, do not list one paper per paragraph), and `## Trends and open
-   problems`. Every non-obvious claim carries an inline `[n]` citing a source in sources.json; use only facts present
-   in the researcher notes, never invent sources, numbers, authors or results. Actually cite your planned web/
+   problems`. EVERY bullet in `## TL;DR` MUST end with at least one inline `[n]` citation — a TL;DR bullet with no
+   citation is a template violation, not a stylistic choice. Every non-obvious claim anywhere in the body carries an
+   inline `[n]` citing a source in sources.json; use only facts present in the researcher notes, never invent
+   sources, numbers, authors or results. Prefer specific, concrete facts over vague generalities: name the actual
+   method/model/paper, include numbers (dates, percentages, benchmark scores, parameter counts) straight from the
+   notes wherever the notes have them — a report that only says "recent research emphasizes X" without naming which
+   paper or giving a number is too thin and will lose points on RUBRIC 5.3 (accuracy/specificity). Actually cite your
+   planned web/
    hf-daily/hf-search entries in the text (RUBRIC 2.2 is checked by counting which families appear in CITED sources
    after the finalizer runs, not by how many families exist in sources.json) — a family present in sources.json but
    never cited in the body will be silently dropped by the finalizer in step 6 and will NOT count. Do NOT write ANY
@@ -72,13 +78,22 @@ Follow these steps in order:
    the finalizer script in step 6.
 6. Run `python3 {FINALIZER_PATH}` with the `execute` tool (no arguments). It drops uncited sources, merges duplicate
    URLs, renumbers `[n]` by first appearance, generates `## References` (one line per source) and rewrites
-   sources.json. Re-run it after every edit to the report body. After it runs, re-check that you still have >= 3
-   source families in sources.json (it can drop a whole family if nothing from it was cited) — if not, add a cited
-   fact from that family to the body and run the finalizer again.
-7. Run `python3 {VALIDATOR_PATH} {REPORT_PATH} {SOURCES_PATH}` with the `execute` tool. If it prints anything other
-   than `OK: ...`, fix the report body (not by hand-editing References) and repeat steps 6-7 until it prints OK.
+   sources.json IN THE SAME RUN, so right after it finishes the two files are guaranteed consistent with each other.
+   Re-run it after EVERY edit to the report body. After it runs, re-check that you still have >= 3 source families in
+   sources.json (it can drop a whole family if nothing from it was cited) — if not, add a cited fact from that family
+   to the body and run the finalizer again. CRITICAL: never edit {SOURCES_PATH} directly with `write_file`/`edit_file`
+   after the finalizer has run — any manual edit to sources.json (or to the `## References` section of the report)
+   desynchronizes the two files and the validator WILL fail with URL-mismatch errors. The only files you ever edit
+   by hand are the report BODY (text before `## References`) and the notes; sources.json and `## References` are
+   owned by the finalizer from this point on.
+7. Run `python3 {VALIDATOR_PATH} {REPORT_PATH} {SOURCES_PATH}` with the `execute` tool as the LAST thing you do before
+   declaring the report finished — its literal, most recent output must start with `OK:`. If it prints anything else,
+   fix the report BODY (never the References section or sources.json directly) and repeat steps 6-7 until it prints
+   OK. Do not finish, summarize, or stop after only the finalizer succeeds — the validator's output is what proves
+   the report is valid, so always run it again as the final check after any further change, with no shortcuts.
 8. Delegate to `citation-checker` a spot-check of 3-5 claims (sentence + the URL it cites). If it reports a claim as
-   UNSUPPORTED, fix or remove that claim in the body, then repeat steps 6-7 again.
+   UNSUPPORTED, fix or remove that claim in the body, then repeat steps 6-7 again — meaning the validator must print
+   OK one more time, after this fix, before you are done.
 """
 
 # ---- TODO 2: the researcher and citation-checker prompts ----

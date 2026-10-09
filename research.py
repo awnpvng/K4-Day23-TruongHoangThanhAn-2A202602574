@@ -14,6 +14,7 @@ from pathlib import Path
 from langchain_core.rate_limiters import InMemoryRateLimiter
 
 from agents import FINALIZER_PATH, REPORT_PATH, SOURCES_PATH, VALIDATOR_PATH, WORKDIR, build_lead_agent  # noqa: F401
+from check_citations import check as check_citations_check
 from model import make_model  # noqa: F401
 from sandbox import download, open_sandbox, upload  # noqa: F401
 
@@ -101,6 +102,15 @@ def save_outputs(backend, topic, messages, elapsed, model_name, reports_dir=REPO
         raise RuntimeError(f"sources.json is not valid JSON: {exc}") from exc
     if not isinstance(sources, list) or not sources:
         raise RuntimeError("sources.json is empty or not a list")
+    report_text = report_bytes.decode("utf-8")
+    problems = check_citations_check(report_text, sources)
+    if problems:
+        raise RuntimeError("downloaded report fails citation validation: " + "; ".join(problems))
+    tldr_match = re.search(r"## TL;DR\n(.*?)\n## ", report_text, re.S)
+    if tldr_match:
+        uncited = [b for b in tldr_match.group(1).splitlines() if b.strip().startswith("-") and "[" not in b]
+        if uncited:
+            raise RuntimeError(f"{len(uncited)} TL;DR bullet(s) have no [n] citation (REPORT_TEMPLATE violation)")
 
     reports_dir.mkdir(parents=True, exist_ok=True)
     slug = slugify(topic)

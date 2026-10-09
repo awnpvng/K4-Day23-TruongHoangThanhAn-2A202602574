@@ -1,21 +1,21 @@
 {
-  "model": "openai/gpt-4o-mini",
-  "elapsed_s": 239.6,
+  "model": "gemini-3.5-flash-lite",
+  "elapsed_s": 211.2,
   "subagent_calls": 5,
   "tool_calls": {
-    "write_todos": 2,
+    "write_todos": 6,
     "task": 5,
-    "read_file": 4,
+    "glob": 1,
+    "read_file": 5,
     "write_file": 2,
-    "execute": 4,
-    "edit_file": 1
+    "execute": 3
   },
   "tokens": {
-    "input": 140873,
-    "output": 4046
+    "input": 224494,
+    "output": 6627
   },
   "topic": "survey about world model",
-  "n_sources": 12,
+  "n_sources": 8,
   "source_families": [
     "arxiv",
     "hf-search",
